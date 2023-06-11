@@ -1,0 +1,15 @@
+@import '../../utils/variables';
+
+.authform {
+    display: flex;
+    margin-top: 100px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 10px;
+    background-color: $secondary-dark;
+    width: 350px;
+    color: $primary-main;
+    border-radius: 10px;
+}

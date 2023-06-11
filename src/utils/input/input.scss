@@ -1,0 +1,13 @@
+@import '../variables';
+
+input {
+  border: none;
+  border-bottom: white solid 2px;
+  background: transparent;
+  width: 100%;
+  padding: 3px;
+  &:focus {
+    outline: none;
+    transform: scale(1.01);
+  }
+}
