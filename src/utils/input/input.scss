@@ -2,12 +2,32 @@
 
 input {
   border: none;
-  border-bottom: white solid 2px;
-  background: transparent;
+  background: $primary-light;
   width: 100%;
   padding: 3px;
+  color: $primary-contrastText;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 10px 5px;
+  border-radius: 4px;
   &:focus {
     outline: none;
     transform: scale(1.01);
   }
+}
+
+
+::-webkit-input-placeholder { /* Edge */
+  color: $dark-primary-contrastText;
+  font-size: 12px;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $dark-primary-contrastText;
+  font-size: 12px;
+}
+
+::placeholder {
+    color: $dark-primary-contrastText;
+    font-size: 12px;
 }

@@ -6,10 +6,32 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 15px;
-    padding: 15px 10px;
+    gap: 20px;
+    padding: 65px 30px;
     background-color: $secondary-dark;
-    width: 350px;
+    width: 400px;
     color: $primary-main;
     border-radius: 10px;
+
+    h3 {
+       font-size: 25px;
+       font-weight: 700;
+       border-bottom: 2px solid $primary-light;
+    }
+
+    &__btn {
+        background: $secondary-light;
+        color: $primary-main;
+        font-size: 20px;
+        padding: 7px 10px;
+        border-radius: 4px;
+        align-self: flex-end;
+        margin-top: 10px;
+        cursor: pointer;
+        transition: all 40ms ease-in-out;
+
+        &:hover {
+            transform: scale(1.07);
+        }
+    }
 }
