@@ -4,7 +4,7 @@ import './input.scss'
 interface InputProps {
     value: string,
     placeholder: string,
-    onChange: Function,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input: React.FC<InputProps> = ({value, onChange, placeholder}) => 
@@ -12,7 +12,7 @@ const Input: React.FC<InputProps> = ({value, onChange, placeholder}) =>
     <input 
     placeholder={placeholder}
     value={value}
-    onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
+    onChange={(e) => onChange(e)}
     />
   )
 
