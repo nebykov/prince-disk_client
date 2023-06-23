@@ -4,14 +4,16 @@ import { IFile } from "../../types/types";
 
 interface FileState {
     files: IFile[] | null,
-    currentDir: string | null,
-    folderName: string | null
+    currentDir: string,
+    folderName: string | null,
+    stack: any[]
 }
 
 const initialState: FileState = {
     files: [],
-    currentDir: null,
-    folderName: null
+    currentDir: '',
+    folderName: null,
+    stack: []
 }
 
 export const fileSlice = createSlice({
@@ -21,7 +23,7 @@ export const fileSlice = createSlice({
         setFiles: (state, action: PayloadAction<IFile[]>) => {
             state.files = action.payload
         },
-         addFolder: (state, action: PayloadAction<IFile>) => {
+         addFile: (state, action: PayloadAction<IFile>) => {
               state.files?.push(action.payload)
          },
         setCurrentDir: (state, action: PayloadAction<string>) => {
@@ -29,10 +31,16 @@ export const fileSlice = createSlice({
         },
         setFolderName: (state, action: PayloadAction<string>) => {
              state.folderName = action.payload
+        },
+        pushToStack: (state, action: PayloadAction<string>) => {
+              state.stack.push(action.payload)
+        },
+        popFromStack: (state) => {
+             state.stack.pop()
         }
     }
 })
 
-export const { setFiles, setCurrentDir, setFolderName, addFolder } = fileSlice.actions
+export const { setFiles, setCurrentDir, setFolderName, addFile, pushToStack, popFromStack } = fileSlice.actions
 
 export default fileSlice.reducer

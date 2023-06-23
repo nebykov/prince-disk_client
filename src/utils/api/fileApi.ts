@@ -20,3 +20,18 @@ export const createDir = async (name: string, dirId: string): Promise<IFile> => 
         throw e
     }
 }
+
+
+export const uploadFile = async (file: File, dirId: string): Promise<IFile> => {
+    try {
+        const formData = new FormData()
+        if (dirId) {
+            formData.append('parent', dirId)
+        }
+        formData.append('file', file)
+        const { data } = await axios.post('http://localhost:5000/file/upload', formData, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+        return data
+    } catch (e) {
+        throw e
+    }
+}

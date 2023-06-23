@@ -19,7 +19,7 @@ const AuthForm: React.FC<AuthFormProps> = ({title, buttonTitle, isLogin}) => {
 
     const authHandler = () => {
         if (isLogin) {
-            login(email.value, password.value).then((data) => dispatch(setUser(data.user))).catch(e => console.log(e.response.data.message))
+            login(email.value, password.value).then((data) => dispatch(setUser(data.user))).catch(e => alert(e.response.data.message))
         } else {
             registration(email.value, password.value).then((data) => dispatch(setUser(data.user)))
         }

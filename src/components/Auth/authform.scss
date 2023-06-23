@@ -10,13 +10,14 @@
     padding: 65px 30px;
     background-color: $secondary-dark;
     width: 400px;
-    color: $primary-main;
+    color: $primary-contrastText;
     border-radius: 10px;
 
     h3 {
+        padding: 5px;
        font-size: 25px;
        font-weight: 700;
-       border-bottom: 2px solid $primary-light;
+       border-bottom: 2px solid $primary-contrastText;
     }
 
     &__btn {

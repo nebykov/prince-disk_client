@@ -3,18 +3,18 @@ import { MdCreateNewFolder, MdDoneOutline } from 'react-icons/md'
 import useInput from '../../../hooks/useInput'
 import { useAppDispatch, useAppSelector } from '../../../hooks/useRedux'
 import { createDir } from '../../../utils/api/fileApi'
-import { addFolder } from '../../../store/reducers/fileSlice'
+import { addFile } from '../../../store/reducers/fileSlice'
 
-const FileCreating = () => {
+const CreateFolder = () => {
     const [creatingForm, setCreatingForm] = React.useState(false)
     const {currentDir} = useAppSelector(state => state.file)
     const dispatch = useAppDispatch()
-    const fileName = useInput('')
+    const folder = useInput('')
 
     const addDir = () => {
-         if (fileName.value && currentDir) {
-            createDir(fileName.value, currentDir).then(data => dispatch(addFolder(data)))
-            fileName.onClear()
+         if (folder.value && currentDir) {
+            createDir(folder.value, currentDir).then(data => dispatch(addFile(data)))
+            folder.onClear()
             setCreatingForm(false)
          }
     }
@@ -26,7 +26,7 @@ const FileCreating = () => {
     </button>
     {creatingForm &&
      <div className="creatingForm">
-     <input type="text" placeholder='Enter Folder Name' value={fileName.value} onChange={fileName.onChange}/>
+     <input type="text" placeholder='Enter Folder Name' value={folder.value} onChange={folder.onChange}/>
      <span className="done" onClick={() => addDir()}>
        <MdDoneOutline />
      </span>
@@ -36,4 +36,4 @@ const FileCreating = () => {
   )
 }
 
-export default FileCreating
+export default CreateFolder
