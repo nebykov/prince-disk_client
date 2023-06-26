@@ -9,6 +9,8 @@ const UploadFile = () => {
   const [file, setFile] = React.useState<File[] | null>(null)
   const [errorMessage, setErrorMessage] = React.useState('')
   const {currentDir} = useAppSelector(state => state.file)
+  const [uploadProgress, setUploadProgress] = React.useState(0)
+  const [fileLoading, setFileLoading] = React.useState(false)
   const dispatch = useAppDispatch()
   const ref = React.useRef<HTMLInputElement>(null)
 
@@ -35,7 +37,14 @@ const UploadFile = () => {
   const onUpload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     if (file) {
-      file.forEach((file) => uploadFile(file, currentDir).then(data => dispatch(addFile(data))).then(() => setFile(null)).catch(e => setErrorMessage(e.response.data.message))) 
+      setFileLoading(true)
+      file.forEach((file) => uploadFile(file, currentDir, setUploadProgress)
+      .then(data => dispatch(addFile(data)))
+      .then(() => setFile(null)).then(() => {
+        setUploadProgress(0)
+        setFileLoading(false)
+      })
+      .catch(e => setErrorMessage(e.response.data.message))) 
     }
   }
 
@@ -51,6 +60,9 @@ const UploadFile = () => {
           <span className='errorBlock__title'>{errorMessage}</span>
           <button className='diskControl__btn error' onClick={onError}>Error!</button>
         </div>
+        :
+        fileLoading?
+        <button className='diskControl__btn active' onClick={onUpload} title='norm' >Loading {uploadProgress}%</button>
         :
         <button className='diskControl__btn active' onClick={onUpload} title='norm' ><MdOutlineDownloadDone /> Click to Upload ({file.length})</button>
       }

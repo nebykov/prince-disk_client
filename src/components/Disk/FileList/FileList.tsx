@@ -1,6 +1,6 @@
 import { useAppSelector } from "../../../hooks/useRedux"
-import File from "./File"
-import './file.scss'
+import File from "./File/File"
+import './filelist.scss'
 
 
 const FileList = () => {
