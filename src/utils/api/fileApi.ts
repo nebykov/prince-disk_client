@@ -1,14 +1,19 @@
 import axios from "axios"
-import { IFile } from "../../types/types"
+import { IFile, IUploadFile } from "../../types/types"
+import { AppDispatch } from '../../store';
+import { addFile, setFiles } from "../../store/reducers/fileSlice";
+import { addUploadFile, changeUploadFile, removeUploadFile, showUploader } from "../../store/reducers/uploadSlice";
 
 
 
-export const getFiles = async (dirId: string): Promise<IFile[]> => {
-    try {
-        const { data } = await axios.get(`http://localhost:5000/file${dirId ? `?parent=${dirId}` : ''}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
-        return data
-    } catch (e) {
-        throw e
+export const getFiles = (dirId: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            const { data } = await axios.get(`http://localhost:5000/file${dirId ? `?parent=${dirId}` : ''}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+            return dispatch(setFiles(data))
+        } catch (e) {
+            throw e
+        }
     }
 }
 
@@ -22,26 +27,35 @@ export const createDir = async (name: string, dirId: string): Promise<IFile> => 
 }
 
 
-export const uploadFile = async (file: File, dirId: string, onProgress: Function): Promise<IFile> => {
-    try {
-        const formData = new FormData()
-        if (dirId) {
-            formData.append('parent', dirId)
-        }
-        formData.append('file', file)
-        const { data } = await axios.post('http://localhost:5000/file/upload', 
-        formData, 
-        {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
-        onUploadProgress: (progresEvent) => {
-            if (progresEvent.total) {
-                const progress = Math.round((progresEvent.loaded / progresEvent?.total) * 100)
-                onProgress(progress)
+export const uploadFile = (file: File, dirId: string) => {
+      return async (dispatch: AppDispatch) => {
+        try {
+            const formData = new FormData()
+            formData.append('file', file);
+            if (dirId) {
+                formData.append('parent', dirId)
             }
-        }})
-        return data
-    } catch (e) {
-        throw e
-    }
+
+            const fileObject: IUploadFile = {id: Date.now(), name: file.name , progress: 0}
+            dispatch(addUploadFile(fileObject))
+            dispatch(showUploader())
+            const { data } = await axios.post('http://localhost:5000/file/upload', 
+            formData, 
+            {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
+            onUploadProgress: (progresEvent) => {
+                if (progresEvent.total) {
+                    const loadProgress = Math.round((progresEvent.loaded / progresEvent?.total) * 100)
+                    const progressObject = {...fileObject, progress: loadProgress}
+                    dispatch(changeUploadFile(progressObject))
+                }
+            }
+        })
+
+            dispatch(addFile(data))
+        } catch (e) {
+            throw e
+        }
+      }
 }
 
 
@@ -55,7 +69,9 @@ export const downloadFile = async (file: IFile) => {
      link.setAttribute('download', file.name)
      document.body.appendChild(link)
      link.click()
-    }).catch(e => console.log(e))
+    }).catch(e => {
+        throw e
+    })
 }
 
 

@@ -1,18 +1,24 @@
 import React from 'react'
 import { motion as mf } from 'framer-motion'
+import { IUploadFile } from '../../../types/types'
 
-const UploaderFile: React.FC = () => {
+
+interface UploaderFileProps {
+    file: IUploadFile
+}
+
+const UploaderFile: React.FC<UploaderFileProps> = ({file}) => {
     return (
         <div className='uploader__file'>
             <div className='fileDescription'>
-            <span className='name'>File Name</span>
-            <span>98%</span>
+            <span className='name'>{file.name.substring(0, 10)}</span>
+            <span>{file.progress}%</span>
             </div>
             <div className="progress-bar">
                 <mf.div
                     className="progress-bar__fill"
                     initial={{ width: '0%' }}
-                    animate={{ width: `70%` }}
+                    animate={{ width: `${file.progress}%` }}
                     transition={{ duration: 0.5 }}
                 />
             </div>

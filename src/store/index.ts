@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./reducers/userSlice";
 import fileSlice from "./reducers/fileSlice";
+import uploadSlice from "./reducers/uploadSlice";
 
 
 
@@ -8,7 +9,8 @@ import fileSlice from "./reducers/fileSlice";
 export const store = configureStore({
     reducer: {
         user: userSlice,
-        file: fileSlice
+        file: fileSlice,
+        upload: uploadSlice
     }
 })
 

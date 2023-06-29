@@ -16,7 +16,7 @@ const App = () => {
     auth()
       .then(data => dispatch(setUser(data.user)))
       .catch(e => {
-        console.log(e)
+        alert(e.response.message)
         return redirect('/auth')
       })
   }, [])

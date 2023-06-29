@@ -3,7 +3,6 @@ import FileList from "./FileList/FileList";
 import DiskControl from './DiskControl/DiskControl';
 import { getFiles, uploadFile } from '../../utils/api/fileApi';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux';
-import { addFile, setFiles } from '../../store/reducers/fileSlice';
 import './disk.scss';
 import Uploader from './Uploader/Uploader';
 
@@ -14,7 +13,7 @@ const Disk = () => {
   const dispatch = useAppDispatch()
 
   React.useEffect(() => {
-    getFiles(currentDir).then(data => dispatch(setFiles(data))).catch(e => alert(e))
+      dispatch(getFiles(currentDir))
   }, [currentDir])
 
   const onDragEnter = (e: React.DragEvent<HTMLElement>) => {
@@ -32,11 +31,11 @@ const Disk = () => {
   const onDrop = (e: React.DragEvent<HTMLElement>) => {
     e.stopPropagation()
     e.preventDefault()
-    const uploadedFiles = [...e.dataTransfer.files]
-    uploadedFiles.forEach(file => uploadFile(file, currentDir, () => { })
-      .then(data => dispatch(addFile(data)))
+    const uploadedFiles = Array.from(e.dataTransfer.files)
+    uploadedFiles.forEach(file => dispatch(uploadFile(file, currentDir))
       .then(() => setDragEnter(false))
-      .catch(e => alert(e.response.data.message)))
+      .catch(e => alert(e.response.data.message)) 
+      )
   }
 
   return (

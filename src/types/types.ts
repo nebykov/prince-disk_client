@@ -24,3 +24,10 @@ export interface IResponse {
     token: string,
     user: IUser
 }
+
+
+export interface IUploadFile {
+        id: number,
+        name: string
+        progress: number
+}

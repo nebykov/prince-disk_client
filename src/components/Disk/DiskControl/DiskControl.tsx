@@ -2,7 +2,7 @@ import { MdOutlineSubdirectoryArrowLeft } from 'react-icons/md'
 import { useAppDispatch, useAppSelector } from '../../../hooks/useRedux'
 import { popFromStack, setCurrentDir } from '../../../store/reducers/fileSlice'
 import CreateFolder from '../Creating/CreateFolder'
-import UploadFile from '../Creating/UploadFile'
+import FileUpload from '../Creating/FileUpload'
 
 const DiskControl = () => {
   const dispatch = useAppDispatch()
@@ -20,7 +20,7 @@ const DiskControl = () => {
       <MdOutlineSubdirectoryArrowLeft className={`arrow ${stack.length <= 0 ? 'disable' : ''}`} onClick={() => backDir()} />
       <div className="createPanel">
         <CreateFolder />
-        <UploadFile />
+        <FileUpload/>
       </div>
     </article>
   )
