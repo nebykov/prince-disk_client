@@ -2,14 +2,25 @@ import axios from "axios"
 import { IFile, IUploadFile } from "../../types/types"
 import { AppDispatch } from '../../store';
 import { addFile, setFiles } from "../../store/reducers/fileSlice";
-import { addUploadFile, changeUploadFile, removeUploadFile, showUploader } from "../../store/reducers/uploadSlice";
+import { addUploadFile, changeUploadFile, showUploader } from "../../store/reducers/uploadSlice";
 
 
 
-export const getFiles = (dirId: string) => {
+export const getFiles = (dirId: string, sortBy: string) => {
     return async (dispatch: AppDispatch) => {
         try {
-            const { data } = await axios.get(`http://localhost:5000/file${dirId ? `?parent=${dirId}` : ''}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+            let url = 'http://localhost:5000/file';
+            if (sortBy) {
+               url = `http://localhost:5000/file?sort=${sortBy}` 
+            } 
+            if (dirId) {
+                url = `http://localhost:5000/file?parent=${dirId}`
+            }
+            if (dirId && sortBy) {
+                url = `http://localhost:5000/file?parent=${dirId}&sort=${sortBy}`
+            }
+            console.log(url)
+            const { data } = await axios.get(url, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
             return dispatch(setFiles(data))
         } catch (e) {
             throw e
@@ -83,4 +94,16 @@ export const deleteFile = async (file: IFile)=> {
   } catch(e) {
     throw e
   }
+}
+
+
+export const searchFiles = (query: string) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            const {data} = await axios.get(`http://localhost:5000/file/search?query=${query}`, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}})
+            dispatch(setFiles(data))
+       } catch (e) {
+          throw e
+       }
+    }
 }

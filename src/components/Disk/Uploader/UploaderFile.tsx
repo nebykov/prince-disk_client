@@ -1,5 +1,5 @@
 import React from 'react'
-import { motion as mf } from 'framer-motion'
+import { motion as m } from 'framer-motion'
 import { IUploadFile } from '../../../types/types'
 
 
@@ -9,20 +9,24 @@ interface UploaderFileProps {
 
 const UploaderFile: React.FC<UploaderFileProps> = ({file}) => {
     return (
-        <div className='uploader__file'>
+        <m.div
+        className='uploader__file'
+        initial={{x: 100, opacity: 0}}
+        animate={{x: 0, opacity: 100}}
+        >
             <div className='fileDescription'>
             <span className='name'>{file.name.substring(0, 10)}</span>
             <span>{file.progress}%</span>
             </div>
             <div className="progress-bar">
-                <mf.div
+                <m.div
                     className="progress-bar__fill"
                     initial={{ width: '0%' }}
                     animate={{ width: `${file.progress}%` }}
                     transition={{ duration: 0.5 }}
                 />
             </div>
-        </div>
+        </m.div>
     )
 }
 

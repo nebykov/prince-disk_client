@@ -1,7 +1,7 @@
 import { MdOutlineClose } from 'react-icons/md';
 import { useAppDispatch, useAppSelector } from '../../../hooks/useRedux';
 import { clearUploader, hideUploader } from '../../../store/reducers/uploadSlice';
-import { motion as mt, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'framer-motion';
 import UploaderFile from './UploaderFile';
 import './uploader.scss';
 
@@ -16,12 +16,12 @@ const Uploader = () => {
     return (
         <AnimatePresence>
               {isVisble &&
-                <mt.div className='uploader' initial={{x: 100, opacity: 0}} animate={{x: 0, opacity: 100}} exit={{x: 100, opacity: 0}}>
+                <m.div className='uploader' initial={{x: 100, opacity: 0}} animate={{x: 0, opacity: 100}} exit={{x: 100, opacity: 0}}>
                     <span className="uploader__close" onClick={handleUploader}><MdOutlineClose /></span>
                     {files.map((file) => (
                         <UploaderFile key={file.id} file={file} />
                     ))}
-                </mt.div>
+                </m.div>
             }
         </AnimatePresence>
     )

@@ -31,3 +31,17 @@ export interface IUploadFile {
         name: string
         progress: number
 }
+
+
+
+export enum SORT_BY {
+    TYPE = 'type',
+    NAME = 'name',
+    SIZE = 'size'
+}
+
+
+export enum VIEW_MODE {
+    MODULE = 'module',
+    LIST = 'list'
+}

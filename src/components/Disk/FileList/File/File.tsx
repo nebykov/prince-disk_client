@@ -4,7 +4,7 @@ import FileControl from "./FileControl";
 import { IFile } from "../../../../types/types";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/useRedux";
 import { pushToStack, setCurrentDir, setFolderName } from "../../../../store/reducers/fileSlice";
-import { motion as mf, AnimatePresence } from "framer-motion";
+import { motion as m } from "framer-motion";
 import './file.scss'
 
 interface FileProps {
@@ -24,7 +24,7 @@ const File: React.FC<FileProps> = ({ file, count }) => {
 
 
   return (
-      <mf.div className="fileItem"
+      <m.div className="fileItem"
         onClick={file.type === 'dir' ? () => setDir() : () => { }}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -33,7 +33,7 @@ const File: React.FC<FileProps> = ({ file, count }) => {
       >
         <FileInfo count={count} file={file} />
         <FileControl file={file} />
-      </mf.div>
+      </m.div>
   )
 }
 
